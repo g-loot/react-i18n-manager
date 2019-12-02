@@ -18,7 +18,7 @@ function manageTranslations({
   const LANG_DIR = `${localGeneratedMessagesDir}/messages`;
   const FRONTEND_EXPORT_FILE = `${localGeneratedMessagesDir}/index.js`;
   const getLocaleFilePath = lang => `${lang.locale}/strings.properties`;
-
+  console.info(`executing: ${`mkdir ${LANG_DIR}`.blue}`);
   mkdirpSync(LANG_DIR);
   const duplicateKeys = [];
   // Aggregates the default messages that were extracted from the example app's

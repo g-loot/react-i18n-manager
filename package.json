@@ -1,0 +1,36 @@
+{
+  "name": "react-i18n-manager",
+  "version": "1.0.0",
+  "description": "translations files automatic manager ontop of react intl's babelplugin, with support for mozilla's open source translations UI pontoon",
+  "bin": "scripts/update-localization-repo.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/g-loot/react-i18n-manager.git"
+  },
+  "keywords": [
+    "i18n",
+    "localization",
+    "react-intl",
+    "react-intl-babel-plugin",
+    "translations-manager"
+  ],
+  "author": "Omar ElGaml",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/g-loot/react-i18n-manager/issues"
+  },
+  "homepage": "https://github.com/g-loot/react-i18n-manager#readme",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "fs": "0.0.1-security",
+    "glob": "^7.1.6",
+    "mkdirp": "^0.5.1",
+    "path": "^0.12.7",
+    "propson": "0.0.3",
+    "shelljs": "^0.8.3"
+  }
+}

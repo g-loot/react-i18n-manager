@@ -27,11 +27,12 @@ const syncTranslations = ({
   console.info(
     `executing: ${`cp -r ${REPO_DIR}/ ${locallyGeneratedMessagesDir}/`.blue}`
   );
+  exec(`mkdir ${locallyGeneratedMessagesDir}`);
   exec(`cp -r ${REPO_DIR}/ ${locallyGeneratedMessagesDir}/`);
   console.info(`executing: ${"npm run update-translations".blue}`);
   // exec('npm run update-translations');
   exec(
-    `NODE_ENV=production babel ./${srcDirectory} --ignore 'local'  --out-file /dev/null `
+    `NODE_ENV=production babel ./${srcDirectory} --ignore '${EXTRACTED_MESSAGES_DIR}'  --out-file /dev/null `
   );
   manageTranslations({
     supportedLocales,
@@ -39,8 +40,6 @@ const syncTranslations = ({
     locallyGeneratedMessagesDir,
     allowEmptyTranslations
   });
-  console.info(`executing: ${`rm -rf ${REPO_DIR}/`.blue}`);
-  exec(`rm -rf ${REPO_DIR}/`);
   console.info(
     `executing: ${`cp -r ${locallyGeneratedMessagesDir}/ ${REPO_DIR}/`.blue}`
   );

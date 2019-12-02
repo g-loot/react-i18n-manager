@@ -2,16 +2,16 @@ require("colors");
 const { exec } = require("shelljs");
 const manageTranslations = require("./manageTranslations");
 
-const run = ({
+const syncTranslations = ({
+  srcDirectory = "src",
   supportedLocales,
   extractedMessagesDir = "src/i18n/locales/extracted-messages",
   REPO_SSH_URL = "git@github.com:g-loot/gll-play-localization.git",
   REPO_EXTRL_DIR = "gll-play-localization",
-  locallyGeneratedMessagesDir = "i18n/locales/generated-messages",
-  options: { allowEmptyTranslations = false }
-}) => {
+  locallyGeneratedMessagesDir = "src/i18n/locales/generated-messages",
+  options: { allowEmptyTranslations = false } = {}
+} = {}) => {
   const REPO_DIR = `../${REPO_EXTRL_DIR}`;
-  const locallyGeneratedMessagesDir = `${srcDirectory}/${locallyGeneratedMessagesDir}`;
   const EXTRACTED_MESSAGES_DIR = `${locallyGeneratedMessagesDir}/*`;
 
   console.info(`executing: ${`rm -rf ${REPO_DIR}`.blue}`);
@@ -31,7 +31,7 @@ const run = ({
   console.info(`executing: ${"npm run update-translations".blue}`);
   // exec('npm run update-translations');
   exec(
-    `NODE_ENV=production babel ./${srcDirectory} --ignore '${EXTRACTED_MESSAGES_DIR}'  --out-file /dev/null `
+    `NODE_ENV=production babel ./${srcDirectory} --ignore 'local'  --out-file /dev/null `
   );
   manageTranslations({
     supportedLocales,
@@ -63,4 +63,4 @@ const run = ({
   // exec("rm -rf src/i18n/locales/extracted-messages");
 };
 
-run();
+module.exports = syncTranslations;

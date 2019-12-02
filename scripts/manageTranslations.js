@@ -8,15 +8,15 @@ const { convertPropsToFlatJson } = require("propson");
 
 function manageTranslations({
   supportedLocales,
-  localGeneratedMessagesDir,
+  locallyGeneratedMessagesDir,
   extractedMessagesDir,
   allowEmptyTranslations = false
 }) {
   const i18n = supportedLocales;
 
   const MESSAGES_PATTERN = `${extractedMessagesDir}/**/*.json`;
-  const LANG_DIR = `${localGeneratedMessagesDir}/messages`;
-  const FRONTEND_EXPORT_FILE = `${localGeneratedMessagesDir}/index.js`;
+  const LANG_DIR = `${locallyGeneratedMessagesDir}/messages`;
+  const FRONTEND_EXPORT_FILE = `${locallyGeneratedMessagesDir}/index.js`;
   const getLocaleFilePath = lang => `${lang.locale}/strings.properties`;
   console.info(`executing: ${`mkdir ${LANG_DIR}`.blue}`);
   mkdirpSync(LANG_DIR);

@@ -1,15 +1,16 @@
 /* eslint-disable */
-const fs = require('fs');
-const path = require('path');
-const { exec } = require('shelljs');
-const { sync: globSync } = require('glob');
-const { sync: mkdirpSync } = require('mkdirp');
-const { convertPropsToFlatJson } = require('propson');
+const fs = require("fs");
+const path = require("path");
+const { exec } = require("shelljs");
+const { sync: globSync } = require("glob");
+const { sync: mkdirpSync } = require("mkdirp");
+const { convertPropsToFlatJson } = require("propson");
 
 function manageTranslations({
   supportedLocales,
   localGeneratedMessagesDir,
   extractedMessagesDir,
+  allowEmptyTranslations = false
 }) {
   const i18n = supportedLocales;
 
@@ -18,8 +19,6 @@ function manageTranslations({
   const FRONTEND_EXPORT_FILE = `${localGeneratedMessagesDir}/index.js`;
   const getLocaleFilePath = lang => `${lang.locale}/strings.properties`;
 
-  const emptyTranslations = false;
-
   mkdirpSync(LANG_DIR);
   const duplicateKeys = [];
   // Aggregates the default messages that were extracted from the example app's
@@ -27,7 +26,7 @@ function manageTranslations({
   // there are messages in different components that use the same `id`. The result
   // is a flat collection of `id: message` pairs for the app's default locale.
   let defaultMessages = globSync(MESSAGES_PATTERN)
-    .map(filename => fs.readFileSync(filename, 'utf8'))
+    .map(filename => fs.readFileSync(filename, "utf8"))
     .map(file => JSON.parse(file))
     .reduce((collection, descriptors) => {
       descriptors.forEach(({ id, defaultMessage, description }) => {
@@ -37,7 +36,7 @@ function manageTranslations({
 
         collection[id] = {
           defaultMessage,
-          description,
+          description
         };
       });
       return collection;
@@ -61,10 +60,10 @@ function manageTranslations({
     let langFile;
     try {
       langFile = fs.readFileSync(`${LANG_DIR}/${getLocaleFilePath(lang)}`, {
-        encoding: 'utf-8',
+        encoding: "utf-8"
       });
       function returnMessagesFromPropertiesFile(rawPropertiesString) {
-        const translationsContent = rawPropertiesString.split('\n');
+        const translationsContent = rawPropertiesString.split("\n");
         const parsedTranslations = convertPropsToFlatJson(translationsContent);
 
         return parsedTranslations;
@@ -75,11 +74,11 @@ function manageTranslations({
       .map(id => [id, defaultMessages[id]])
       .reduce((collection, [id]) => {
         if (lang.defaultLocale) {
-          collection[id] = defaultMessagesObj[id].split('\n').join('\\n');
+          collection[id] = defaultMessagesObj[id].split("\n").join("\\n");
         } else {
           // Filter out empty translations or include them, pontoon detects that translations are done if there's an empty one.
-          if (emptyTranslations) {
-            collection[id] = (langDoc && langDoc[id]) || '';
+          if (allowEmptyTranslations) {
+            collection[id] = (langDoc && langDoc[id]) || "";
           } else {
             if (langDoc && langDoc[id]) {
               collection[id] = langDoc && langDoc[id];
@@ -92,8 +91,8 @@ function manageTranslations({
     mkdirpSync(path.dirname(`${LANG_DIR}/${getLocaleFilePath(lang)}`));
 
     const propertiesContent = Object.keys(units)
-      .map(id => `${id}=${units[id] ? units[id] : ''}`)
-      .join('\n');
+      .map(id => `${id}=${units[id] ? units[id] : ""}`)
+      .join("\n");
 
     fs.writeFileSync(
       `${LANG_DIR}/${getLocaleFilePath(lang)}`,
@@ -114,7 +113,7 @@ function manageTranslations({
             lang.codeName
           }Messages from './messages/${getLocaleFilePath(lang)}';`
       )
-      .join('\n')}
+      .join("\n")}
 
 
     function returnMessagesFromPropertiesFile(rawPropertiesString) {
@@ -131,15 +130,15 @@ function manageTranslations({
         name: '${lang.name}',
         locale: '${lang.locale}',
         contentfulLocale: '${lang.contentfulLocale}',
-        ${lang.defaultLocale ? `defaultLocale: true, ` : ''}
+        ${lang.defaultLocale ? `defaultLocale: true, ` : ""}
         messages: returnMessagesFromPropertiesFile(${`${lang.codeName}Messages`}),
       }`
         )
-        .join(',\n')}
+        .join(",\n")}
     ];
     
   `
   );
-  exec('npm run format');
+  exec("npm run format");
 }
 module.exports = manageTranslations;

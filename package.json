@@ -1,6 +1,6 @@
 {
   "name": "react-i18n-manager",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "translations files automatic manager ontop of react intl's babelplugin, with support for mozilla's open source translations UI pontoon",
   "bin": "scripts/update-localization-repo.js",
   "main": "index.js",

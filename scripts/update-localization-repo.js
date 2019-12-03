@@ -2,11 +2,11 @@ require("colors");
 const { exec } = require("shelljs");
 const manageTranslations = require("./manageTranslations");
 let verboseLogging = false;
-const execute = command => {
+const execute = (...args) => {
   if (verboseLogging) {
     console.info(`executing: ${`${command}`.blue}`);
   }
-  exec(command);
+  exec(...args);
 };
 
 const syncTranslations = ({

@@ -29,7 +29,9 @@ const syncTranslations = ({
   execute(`git pull`, { cwd: REPO_DIR });
   execute(`rm -rf ${locallyGeneratedMessagesDir}/`);
   execute(`mkdir ${locallyGeneratedMessagesDir}`);
-  execute(`cp -r ${REPO_DIR}/messages ${locallyGeneratedMessagesDir}/messages`);
+  execute(
+    `cp -r ${REPO_DIR}/messages/ ${locallyGeneratedMessagesDir}/messages/`
+  );
   execute(`cp -r ${REPO_DIR}/index.js ${locallyGeneratedMessagesDir}/index.js`);
   console.info(
     `Extracting Messages from Source code path ${
@@ -54,7 +56,9 @@ const syncTranslations = ({
     `Copying results back to original repository and pushing changes,.  `
       .magenta
   );
-  execute(`cp -r ${locallyGeneratedMessagesDir}/messages ${REPO_DIR}/messages`);
+  execute(
+    `cp -r ${locallyGeneratedMessagesDir}/messages/ ${REPO_DIR}/messages/`
+  );
   execute(`cp -r ${locallyGeneratedMessagesDir}/index.js ${REPO_DIR}/index.js`);
   execute("git add .", { cwd: REPO_DIR });
   execute(`git commit -a -m "Automated translation ids update"`, {

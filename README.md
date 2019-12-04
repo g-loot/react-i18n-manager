@@ -8,7 +8,8 @@ https://github.com/formatjs/formatjs/tree/master/packages/babel-plugin-react-int
 
 - pass down your locales configured like this
 
-```[
+```json
+[
   {
     "name": "English",
     "codeName": "en",

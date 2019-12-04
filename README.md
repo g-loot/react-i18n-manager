@@ -1,10 +1,11 @@
 # react-i18n-manager
 A system to auto manage your react intl extractedMessages, into language files in a seperate repo, with added support for mozilla pontoon
 
-this library requires: `babel-preset-react-app` installed and configured
-https://github.com/formatjs/formatjs/tree/master/packages/babel-plugin-react-intl
+- this library requires: `babel-preset-react-app` installed and configured
+  https://github.com/formatjs/formatjs/tree/master/packages/babel-plugin-react-intl
 
-- it stores your language files in a seperate public repository that you depend on that should be setup like this repo
+- it stores your language files in a seperate public repository that you depend on that should be setup like this repo,
+  basic configuration is a messages folder and an index.js folder
   https://github.com/g-loot/gll-play-localization
 - add your localization repo as a dependency of your frontend client, and import the locales with messages objects like so
 ```javascript

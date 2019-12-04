@@ -53,8 +53,7 @@ const syncTranslations = ({
     allowEmptyTranslations
   });
   console.log(
-    `Copying results back to original repository and pushing changes,.  `
-      .magenta
+    `Copying results back to original repository and pushing changes.`.magenta
   );
   execute(
     `cp -r ${locallyGeneratedMessagesDir}/messages/ ${REPO_DIR}/messages/`

@@ -4,6 +4,15 @@ A system to auto manage your react intl extractedMessages, into language files i
 this library requires: `babel-preset-react-app` installed and configured
 https://github.com/formatjs/formatjs/tree/master/packages/babel-plugin-react-intl
 
+- it stores your language files in a seperate public repository that you depend on that should be setup like this repo
+  https://github.com/g-loot/gll-play-localization
+- add your localization repo as a dependency of your frontend client, and import the locales with messages objects like so
+```javascript
+import locales from 'gll-play-localization';
+
+export default locales;
+```
+
 - As of now it only supports .properties lang files which get parsed as json in runtime using `propson` package so you need to configure RawPlugin for fusebox to import .properties as string
 
 - pass down your locales configured like this

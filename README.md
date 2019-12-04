@@ -26,3 +26,19 @@ https://github.com/formatjs/formatjs/tree/master/packages/babel-plugin-react-int
   ...etc
 ]
 ```
+
+
+Example Configuration for the node script you need to run
+```javascript
+const syncTranslations = require('react-i18n-manager');
+const supportedLocales = require('../supportedLocales.json');
+
+syncTranslations({
+  supportedLocales,
+  srcDirectory: 'src',
+  extractedMessagesDir: 'src/i18n/locales/extracted-messages',
+  locallyGeneratedMessagesDir: 'src/i18n/locales/generated-messages',
+  REPO_SSH_URL: 'git@github.com:g-loot/gll-play-localization.git',
+  REPO_EXTRL_DIR: 'gll-play-localization',
+});
+```

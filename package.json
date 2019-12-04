@@ -33,5 +33,9 @@
     "path": "^0.12.7",
     "propson": "0.0.3",
     "shelljs": "^0.8.3"
+  },
+  "peerDependencies": {
+    "babel-plugin-react-intl": "^4.1.21",
+    "babel-preset-react-app": "^9.0.2"
   }
 }

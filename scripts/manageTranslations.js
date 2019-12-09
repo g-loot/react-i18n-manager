@@ -117,8 +117,7 @@ function manageTranslations({
 
 
     function returnMessagesFromPropertiesFile(rawPropertiesString) {
-      const translationsContent = rawPropertiesString.split("\\n");
-      const parsedTranslations = propertiesToJSON(translationsContent);
+      const parsedTranslations = propertiesToJSON(rawPropertiesString);
     
       return parsedTranslations;
     }

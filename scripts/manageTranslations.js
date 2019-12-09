@@ -104,7 +104,7 @@ function manageTranslations({
     `${FRONTEND_EXPORT_FILE}`,
     `
     /* eslint-disable import/no-unresolved */
-    import { convertPropsToFlatJson } from "propson";
+    import propertiesToJSON from "properties-to-json";
     // This is imported using Fusebox's raw plugin, make sure to include .properties in your fusebox config
     ${i18n
       .map(
@@ -118,8 +118,8 @@ function manageTranslations({
 
     function returnMessagesFromPropertiesFile(rawPropertiesString) {
       const translationsContent = rawPropertiesString.split("\\n");
-      const parsedTranslations = convertPropsToFlatJson(translationsContent);
-
+      const parsedTranslations = propertiesToJSON(translationsContent);
+    
       return parsedTranslations;
     }
 

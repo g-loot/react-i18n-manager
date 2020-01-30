@@ -58,6 +58,7 @@ function manageTranslations({
 
   i18n.forEach(lang => {
     let langFile;
+    let langDoc;
     try {
       langFile = fs.readFileSync(`${LANG_DIR}/${getLocaleFilePath(lang)}`, {
         encoding: "utf-8"

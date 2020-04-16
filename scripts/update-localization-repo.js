@@ -16,7 +16,7 @@ const syncTranslations = ({
   REPO_SSH_URL = "git@github.com:g-loot/gll-play-localization.git",
   REPO_EXTRL_DIR = "gll-play-localization",
   locallyGeneratedMessagesDir = "src/i18n/locales/generated-messages",
-  options: { allowEmptyTranslations = false, allowVerboseLogging = false } = {}
+  options: { allowEmptyTranslations = false, allowVerboseLogging = false } = {},
 } = {}) => {
   verboseLogging = allowVerboseLogging;
 
@@ -50,7 +50,7 @@ const syncTranslations = ({
     supportedLocales,
     extractedMessagesDir,
     locallyGeneratedMessagesDir,
-    allowEmptyTranslations
+    allowEmptyTranslations,
   });
   console.log(
     `Copying results back to original repository and pushing changes.`.magenta
@@ -61,7 +61,7 @@ const syncTranslations = ({
   execute(`cp -r ${locallyGeneratedMessagesDir}/index.js ${REPO_DIR}/index.js`);
   execute("git add .", { cwd: REPO_DIR });
   execute(`git commit -a -m "Automated translation ids update"`, {
-    cwd: REPO_DIR
+    cwd: REPO_DIR,
   });
   execute(`git push`, { cwd: REPO_DIR });
   execute(`npm run publish`, { cwd: REPO_DIR });

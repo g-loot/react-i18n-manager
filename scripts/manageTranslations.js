@@ -10,14 +10,14 @@ function manageTranslations({
   supportedLocales,
   locallyGeneratedMessagesDir,
   extractedMessagesDir,
-  allowEmptyTranslations = false
+  allowEmptyTranslations = false,
 }) {
   const i18n = supportedLocales;
 
   const MESSAGES_PATTERN = `${extractedMessagesDir}/**/*.json`;
   const LANG_DIR = `${locallyGeneratedMessagesDir}/messages`;
   const FRONTEND_EXPORT_FILE = `${locallyGeneratedMessagesDir}/index.js`;
-  const getLocaleFilePath = lang => `${lang.locale}/strings.properties`;
+  const getLocaleFilePath = (lang) => `${lang.locale}/strings.properties`;
   console.info(`executing: ${`mkdir ${LANG_DIR}`.blue}`);
   mkdirpSync(LANG_DIR);
   const duplicateKeys = [];
@@ -26,8 +26,8 @@ function manageTranslations({
   // there are messages in different components that use the same `id`. The result
   // is a flat collection of `id: message` pairs for the app's default locale.
   let defaultMessages = globSync(MESSAGES_PATTERN)
-    .map(filename => fs.readFileSync(filename, "utf8"))
-    .map(file => JSON.parse(file))
+    .map((filename) => fs.readFileSync(filename, "utf8"))
+    .map((file) => JSON.parse(file))
     .reduce((collection, descriptors) => {
       descriptors.forEach(({ id, defaultMessage, description }) => {
         if (Object.prototype.hasOwnProperty.call(collection, id))
@@ -36,7 +36,7 @@ function manageTranslations({
 
         collection[id] = {
           defaultMessage,
-          description
+          description,
         };
       });
       return collection;
@@ -56,12 +56,12 @@ function manageTranslations({
     return acc;
   }, {});
 
-  i18n.forEach(lang => {
+  i18n.forEach((lang) => {
     let langFile;
     let langDoc;
     try {
       langFile = fs.readFileSync(`${LANG_DIR}/${getLocaleFilePath(lang)}`, {
-        encoding: "utf-8"
+        encoding: "utf-8",
       });
       function returnMessagesFromPropertiesFile(rawPropertiesString) {
         const translationsContent = rawPropertiesString.split("\n");
@@ -72,7 +72,7 @@ function manageTranslations({
       langDoc = returnMessagesFromPropertiesFile(langFile);
     } catch (e) {}
     const units = Object.keys(defaultMessages)
-      .map(id => [id, defaultMessages[id]])
+      .map((id) => [id, defaultMessages[id]])
       .reduce((collection, [id]) => {
         if (lang.defaultLocale) {
           collection[id] = defaultMessagesObj[id].split("\n").join("\\n");
@@ -92,7 +92,7 @@ function manageTranslations({
     mkdirpSync(path.dirname(`${LANG_DIR}/${getLocaleFilePath(lang)}`));
 
     const propertiesContent = Object.keys(units)
-      .map(id => `${id}=${units[id] ? units[id] : ""}`)
+      .map((id) => `${id}=${units[id] ? units[id] : ""}`)
       .join("\n");
 
     fs.writeFileSync(
@@ -109,16 +109,21 @@ function manageTranslations({
     // This is imported using Fusebox's raw plugin, make sure to include .properties in your fusebox config
     ${i18n
       .map(
-        lang =>
-          `import * as ${
-            lang.codeName
-          }Messages from './messages/${getLocaleFilePath(lang)}';`
+        (lang) =>
+          `import ${lang.codeName}Messages from './messages/${getLocaleFilePath(
+            lang
+          )}';`
       )
       .join("\n")}
 
 
     function returnMessagesFromPropertiesFile(rawPropertiesString) {
-      const parsedTranslations = propertiesToJSON(rawPropertiesString);
+      let parsedTranslations;
+      if(typeof rawPropertiesString === 'string') {
+        parsedTranslations = propertiesToJSON(rawPropertiesString);
+      } else {
+        parsedTranslations = propertiesToJSON(rawPropertiesString.default);
+      }
     
       return parsedTranslations;
     }
@@ -126,7 +131,7 @@ function manageTranslations({
     export default [
       ${i18n
         .map(
-          lang => `{
+          (lang) => `{
         name: '${lang.name}',
         locale: '${lang.locale}',
         contentfulLocale: '${lang.contentfulLocale}',

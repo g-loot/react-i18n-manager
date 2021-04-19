@@ -40,6 +40,9 @@ jobs:
         run: echo ::set-output name=VERSION::$( git describe --tag --abbrev=0 )
       - run: git describe --tag --abbrev=0
       - run: npm --no-git-tag-version version $( git describe --tag --abbrev=0 )
+      - run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGE_TOKEN }}
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

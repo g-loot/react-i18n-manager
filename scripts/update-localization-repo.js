@@ -15,6 +15,7 @@ const syncTranslations = ({
   extractedMessagesDir = "src/i18n/locales/extracted-messages",
   REPO_SSH_URL = "git@github.com:g-loot/gll-play-localization.git",
   REPO_EXTRL_DIR = "gll-play-localization",
+  PACKAGE_NAME = "gll-play-localization",
   locallyGeneratedMessagesDir = "src/i18n/locales/generated-messages",
   options: { allowEmptyTranslations = false, allowVerboseLogging = false } = {},
 } = {}) => {
@@ -64,8 +65,8 @@ const syncTranslations = ({
     cwd: REPO_DIR,
   });
   execute(`git push`, { cwd: REPO_DIR });
-  execute(`npm run publish`, { cwd: REPO_DIR });
-  execute(`npm up gll-play-localization`);
+  execute(`npm publish`, { cwd: REPO_DIR });
+  execute(`npm update ${PACKAGE_NAME}`);
   execute(`rm -rf ${REPO_DIR}`);
   execute(`rm -rf ${locallyGeneratedMessagesDir}`);
   execute("rm -rf src/i18n/locales/extracted-messages");

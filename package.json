@@ -33,7 +33,7 @@
     "mkdirp": "^0.5.1",
     "path": "^0.12.7",
     "propson": "0.0.3",
-    "shelljs": "^0.8.3"
+    "shelljs": "^0.8.5"
   },
   "peerDependencies": {
     "babel-plugin-react-intl": "^4.1.21",
